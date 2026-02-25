@@ -1,0 +1,17 @@
+{
+  "name": "cc-workflow",
+  "version": "1.0.0",
+  "description": "Minimal multi-CLI collaboration framework",
+  "type": "module",
+  "main": "src/index.js",
+  "bin": {
+    "ccw2": "./bin/ccw.js"
+  },
+  "scripts": {
+    "start": "node bin/ccw.js"
+  },
+  "dependencies": {},
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
