@@ -1,8 +1,7 @@
 {
   "name": "cc-workflow-marketplace",
   "owner": {
-    "name": "JRZhang",
-    "email": "zhangjr7@xiaopeng.com"
+    "name": "JRZhang"
   },
   "description": "CC-Workflow plugin marketplace - 多 CLI 协作框架",
   "plugins": [
