@@ -1,27 +1,21 @@
 # CC-Workflow
 
-最简多 CLI 协作框架 - 支持 Gemini/Qwen/Codex 统一调用与输出解析。
+多 CLI 协作框架 + llmdoc 文档驱动开发
 
-## 核心能力
+## 项目结构
 
-1. **统一 CLI 调用** - 通过 `ccw cli` 命令调用不同 CLI 工具
-2. **结构化输出解析** - 解析 stream-json/json-lines 格式
-3. **会话状态管理** - 支持历史记录和 resume
+本项目包含两部分：
 
-## 安装
+### 1. NPM 包（CLI 工具）
 
+提供 `ccw cli` 命令行工具，用于调用 Gemini/Qwen/Codex 等 AI 模型。
+
+**安装**:
 ```bash
-# 全局安装
-npm install -g .
-
-# 或本地使用
-node bin/ccw.js
+npm install -g cc-workflow
 ```
 
-## 使用
-
-### 命令行
-
+**使用**:
 ```bash
 # 分析任务
 ccw cli -p "分析认证模块的安全性" --tool gemini --mode analysis
@@ -31,94 +25,107 @@ ccw cli -p "实现用户登录功能" --tool codex --mode write
 
 # 继续上次会话
 ccw cli -p "继续分析" --tool gemini --resume
-
-# 查看历史
-ccw history
 ```
 
-### 编程接口
+### 2. Claude Code Plugin
 
-```javascript
-import { executeCli, flattenOutput } from 'cc-workflow';
+提供文档驱动开发工作流、智能 Agents 和自动化技能。
 
-const result = await executeCli({
-  tool: 'gemini',
-  prompt: '分析代码结构',
-  mode: 'analysis',
-  onOutput: (unit) => {
-    if (unit.type === 'agent_message') {
-      console.log(unit.content);
-    }
-  }
-});
+**安装**:
+```bash
+# 添加插件市场
+/plugin marketplace add https://github.com/your-org/cc-workflow
 
-console.log('Agent 回复:', result.output.agentMessage);
+# 安装插件
+/plugin install ccw@cc-workflow
 ```
 
-## 架构
+详细说明请查看 [.claude-plugin/README.md](.claude-plugin/README.md)
+
+## 特性
+
+- **文档驱动开发**: 基于 llmdoc 的 LLM 友好文档系统
+- **多 CLI 协作**: 支持 Gemini/Qwen/Codex 统一调用
+- **智能 Agent**: investigator、worker、recorder、scout
+- **自动化工作流**: 代码调查、文档生成、提交信息
+
+## 快速开始
+
+### 方式 1: Plugin 安装（推荐）
+
+适合需要完整 llmdoc 文档驱动开发工作流的用户。
+
+```bash
+# 添加插件市场
+/plugin marketplace add https://github.com/your-org/cc-workflow
+
+# 安装插件
+/plugin install ccw@cc-workflow
+
+# 初始化文档系统
+/ccw:initDoc
+```
+
+### 方式 2: 仅使用 CLI 工具
+
+适合只需要 CLI 工具进行多模型协作的用户。
+
+```bash
+# 全局安装 CLI 工具
+npm install -g cc-workflow
+
+# 使用 CLI 命令
+ccw cli -p "分析认证模块" --tool gemini
+ccw cli -p "实现登录功能" --tool codex --mode write
+```
+
+## 项目目录
 
 ```
 cc-workflow/
-├── bin/ccw.js                    # CLI 入口
-├── src/
-│   ├── cli.js                    # 命令行解析
-│   ├── index.js                  # 导出入口
+├── .claude-plugin/          # Claude Code Plugin
+│   ├── manifest.json        # Plugin 配置
+│   ├── README.md            # Plugin 说明
+│   ├── CLAUDE.md            # 主配置文件
+│   ├── AGENTS.md            # Agent 使用说明
+│   ├── agents/              # Agent 定义（5个）
+│   ├── commands/            # 命令定义（4个）
+│   ├── skills/              # 技能定义（5个）
+│   └── references/          # 参考文档
+├── src/                     # CLI 工具实现
+│   ├── cli.js               # 命令行接口
 │   └── tools/
-│       ├── cli-executor.js       # CLI 执行核心
-│       ├── cli-output-converter.js # 输出解析
-│       └── cli-state.js          # 状态管理
-├── .claude/
-│   ├── agents/
-│   │   └── cli-execution-agent.md # 执行代理定义
-│   └── workflows/
-│       └── cli-tools-usage.md    # CLI 使用规范
-├── CLAUDE.md                     # Claude Code 指令
-└── package.json
+├── bin/                     # CLI 入口
+│   └── ccw.js
+├── package.json             # NPM 包配置
+└── README.md                # 项目说明
 ```
 
-## 通信机制
+## 开发
 
-### 1. 文件系统 - 会话状态共享
+```bash
+# 安装依赖
+npm install
 
-```
-~/.cc-workflow/
-└── projects/<project-id>/
-    ├── history.json      # 执行历史索引
-    └── sessions/
-        └── <id>.json     # 完整执行记录
-```
+# 本地测试 CLI
+node bin/ccw.js cli -p "test" --tool gemini
 
-### 2. stdout 解析 - stream-json 格式
-
-| CLI | 格式 | 参数 |
-|-----|------|------|
-| Gemini | stream-json | `-o stream-json` |
-| Qwen | stream-json | `-o stream-json` |
-| Codex | json-lines | `--json` |
-
-### 3. 主 Agent 编排
-
-Claude Code 作为主 agent，通过 Bash 调用 `ccw cli` 分发任务：
-
-```javascript
-// 分析任务 → gemini
-Bash({ command: "ccw cli -p '...' --tool gemini" })
-
-// 实现任务 → codex
-Bash({ command: "ccw cli -p '...' --tool codex --mode write" })
+# 本地测试 Plugin
+# 在 Claude Code 中使用本地路径安装
+/plugin install ccw@file:///path/to/cc-workflow/.claude-plugin
 ```
 
-## 输出类型
+## 文档
 
-| 类型 | 说明 |
-|------|------|
-| `agent_message` | 最终回答（关键） |
-| `streaming_content` | 流式内容 |
-| `thought` | AI 思考过程 |
-| `tool_call` | 工具调用 |
-| `metadata` | 会话元数据 |
-| `progress` | 进度信息（过滤） |
+- [Plugin 使用说明](.claude-plugin/README.md)
+- [Agent 说明](.claude-plugin/AGENTS.md)
+- [CLI 使用规范](.claude-plugin/references/cli-tools-usage.md)
+- [CLI 执行代理](.claude-plugin/agents/cli-execution-agent.md)
 
 ## License
 
 MIT
+
+---
+
+由 **JRZhang** 精心打造

@@ -1,0 +1,34 @@
+{
+  "name": "ccw",
+  "version": "1.0.0",
+  "description": "多 CLI 协作框架 + llmdoc 文档驱动开发",
+  "author": "JRZhang",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-org/cc-workflow"
+  },
+  "skills": [
+    "skills/investigate",
+    "skills/commit",
+    "skills/update-doc",
+    "skills/read-doc",
+    "skills/doc-workflow"
+  ],
+  "commands": [
+    "commands/initDoc.md",
+    "commands/withScout.md",
+    "commands/what.md",
+    "commands/cli.md"
+  ],
+  "agents": [
+    "agents/investigator.md",
+    "agents/recorder.md",
+    "agents/scout.md",
+    "agents/worker.md",
+    "agents/cli-execution-agent.md"
+  ],
+  "instructions": "CLAUDE.md",
+  "references": [
+    "references/cli-tools-usage.md"
+  ]
+}
