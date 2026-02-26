@@ -1,0 +1,8 @@
+{
+  "name": "ccw",
+  "description": "多 CLI 协作框架 + llmdoc 文档驱动开发",
+  "version": "1.0.0",
+  "author": {
+    "name": "JRZhang"
+  }
+}
