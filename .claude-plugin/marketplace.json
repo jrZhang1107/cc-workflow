@@ -1,9 +1,10 @@
 {
   "name": "cc-workflow-marketplace",
   "owner": {
-    "name": "JRZhang"
+    "name": "JRZhang",
+    "email": "your-email@example.com"
   },
-  "description": "CC-Workflow plugin marketplace - 多 CLI 协作框架",
+  "description": "CC-Workflow plugin marketplace",
   "plugins": [
     {
       "name": "ccw",
