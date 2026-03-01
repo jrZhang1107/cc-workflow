@@ -4,5 +4,25 @@
   "version": "1.0.0",
   "author": {
     "name": "JRZhang"
-  }
+  },
+  "commands": [
+    "commands/cli.md",
+    "commands/initDoc.md",
+    "commands/what.md",
+    "commands/withScout.md"
+  ],
+  "skills": [
+    "skills/commit",
+    "skills/doc-workflow",
+    "skills/investigate",
+    "skills/read-doc",
+    "skills/update-doc"
+  ],
+  "agents": [
+    "agents/cli-execution-agent.md",
+    "agents/investigator.md",
+    "agents/recorder.md",
+    "agents/scout.md",
+    "agents/worker.md"
+  ]
 }
