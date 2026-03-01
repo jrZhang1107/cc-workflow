@@ -5,24 +5,24 @@
   "author": {
     "name": "JRZhang"
   },
-  "commands": [
-    "commands/cli.md",
-    "commands/initDoc.md",
-    "commands/what.md",
-    "commands/withScout.md"
-  ],
-  "skills": [
-    "skills/commit",
-    "skills/doc-workflow",
-    "skills/investigate",
-    "skills/read-doc",
-    "skills/update-doc"
-  ],
-  "agents": [
-    "agents/cli-execution-agent.md",
-    "agents/investigator.md",
-    "agents/recorder.md",
-    "agents/scout.md",
-    "agents/worker.md"
-  ]
+  "commands": {
+    "cli": "commands/cli.md",
+    "initDoc": "commands/initDoc.md",
+    "what": "commands/what.md",
+    "withScout": "commands/withScout.md"
+  },
+  "skills": {
+    "commit": "skills/commit",
+    "doc-workflow": "skills/doc-workflow",
+    "investigate": "skills/investigate",
+    "read-doc": "skills/read-doc",
+    "update-doc": "skills/update-doc"
+  },
+  "agents": {
+    "cli-execution-agent": "agents/cli-execution-agent.md",
+    "investigator": "agents/investigator.md",
+    "recorder": "agents/recorder.md",
+    "scout": "agents/scout.md",
+    "worker": "agents/worker.md"
+  }
 }
