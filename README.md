@@ -119,8 +119,8 @@ node bin/ccw.js cli -p "test" --tool gemini
 
 - [Plugin 使用说明](.claude-plugin/README.md)
 - [Agent 说明](.claude-plugin/AGENTS.md)
-- [CLI 使用规范](.claude-plugin/references/cli-tools-usage.md)
-- [CLI 执行代理](.claude-plugin/agents/cli-execution-agent.md)
+- [CLI 使用规范](references/cli-tools-usage.md)
+- [CLI 执行代理](agents/cli-execution-agent.md)
 
 ## License
 
