@@ -1,15 +1,40 @@
 {
   "name": "cc-workflow",
   "version": "1.0.0",
-  "description": "Minimal multi-CLI collaboration framework",
+  "description": "Multi-CLI collaboration framework + llmdoc for Claude Code",
   "type": "module",
   "main": "src/index.js",
   "bin": {
+    "cc-workflow": "./bin/setup.js",
     "llmdoc-ccw": "./bin/ccw.js"
   },
   "scripts": {
-    "start": "node bin/ccw.js"
+    "start": "node bin/ccw.js",
+    "setup": "node bin/setup.js"
   },
+  "files": [
+    "bin/",
+    "src/",
+    ".claude-plugin/",
+    "llmdoc-ccw/"
+  ],
+  "keywords": [
+    "claude",
+    "claude-code",
+    "ai",
+    "llm",
+    "cli",
+    "plugin",
+    "gemini",
+    "codex",
+    "documentation"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-org/cc-workflow.git"
+  },
+  "author": "JRZhang",
+  "license": "MIT",
   "dependencies": {},
   "engines": {
     "node": ">=18.0.0"

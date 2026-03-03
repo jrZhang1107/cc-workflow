@@ -1,15 +1,14 @@
 {
   "name": "cc-workflow-marketplace",
   "owner": {
-    "name": "JRZhang",
-    "email": "your-email@example.com"
+    "name": "JRZhang"
   },
-  "description": "CC-Workflow plugin marketplace",
   "plugins": [
     {
       "name": "llmdoc-ccw",
-      "source": "./",
-      "description": "多 CLI 协作框架 + llmdoc 文档驱动开发"
+      "source": "./llmdoc-ccw",
+      "description": "多 CLI 协作框架 + llmdoc 文档驱动开发",
+      "version": "1.0.0"
     }
   ]
 }

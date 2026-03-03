@@ -1,126 +1,139 @@
 # CC-Workflow
 
-多 CLI 协作框架 + llmdoc 文档驱动开发
+多 CLI 协作框架 + llmdoc 文档驱动开发（Claude Code Plugin）
 
-## 项目结构
+## 🚀 安装
 
-本项目包含两部分：
+### 方式 1: npx 安装（推荐）
 
-### 1. NPM 包（CLI 工具）
-
-提供 `llmdoc-ccw cli` 命令行工具，用于调用 Gemini/Qwen/Codex 等 AI 模型。
-
-**安装**:
 ```bash
-npm install -g cc-workflow
+npx cc-workflow
 ```
 
-**使用**:
-```bash
-# 分析任务
-llmdoc-ccw cli -p "分析认证模块的安全性" --tool gemini --mode analysis
+运行后按提示在 Claude Code 中执行：
 
-# 实现任务
-llmdoc-ccw cli -p "实现用户登录功能" --tool codex --mode write
-
-# 继续上次会话
-llmdoc-ccw cli -p "继续分析" --tool gemini --resume
+```
+/plugin marketplace add C:\Users\<你的用户名>\.claude\plugins\cc-workflow
+/plugin install llmdoc-ccw@cc-workflow-marketplace
 ```
 
-### 2. Claude Code Plugin
+重启 Claude Code 即可使用。
 
-提供文档驱动开发工作流、智能 Agents 和自动化技能。
+### 方式 2: 本地开发测试
 
-**安装**:
 ```bash
-# 添加插件市场
-/plugin marketplace add https://github.com/your-org/cc-workflow
-
-# 安装插件
-/plugin install llmdoc-ccw@cc-workflow
+claude --plugin-dir ./llmdoc-ccw
 ```
 
-详细说明请查看 [.claude-plugin/README.md](.claude-plugin/README.md)
+### 方式 3: GitHub marketplace
 
-## 特性
+将项目推到 GitHub 后：
 
-- **文档驱动开发**: 基于 llmdoc 的 LLM 友好文档系统
-- **多 CLI 协作**: 支持 Gemini/Qwen/Codex 统一调用
-- **智能 Agent**: investigator、worker、recorder、scout
-- **自动化工作流**: 代码调查、文档生成、提交信息
+```
+/plugin marketplace add your-username/cc-workflow
+/plugin install llmdoc-ccw@cc-workflow-marketplace
+```
+
+### 卸载
+
+```bash
+npx cc-workflow uninstall
+```
+
+然后在 Claude Code 中执行：
+
+```
+/plugin marketplace remove cc-workflow-marketplace
+```
 
 ## 快速开始
 
-### 方式 1: Plugin 安装（推荐）
-
-适合需要完整 llmdoc 文档驱动开发工作流的用户。
+安装后在 Claude Code 中：
 
 ```bash
-# 添加插件市场
-/plugin marketplace add https://github.com/your-org/cc-workflow
-
-# 安装插件
-/plugin install llmdoc-ccw@cc-workflow
-
-# 初始化文档系统
+# 初始化 llmdoc 文档系统
 /llmdoc-ccw:initDoc
 ```
 
-### 方式 2: 仅使用 CLI 工具
+### Commands（显式调用）
 
-适合只需要 CLI 工具进行多模型协作的用户。
+| 命令 | 描述 |
+|------|------|
+| `/llmdoc-ccw:initDoc` | 初始化 llmdoc 文档系统 |
+| `/llmdoc-ccw:withScout` | 复杂任务：先深度调研，再执行 |
+| `/llmdoc-ccw:what` | 通过结构化问题澄清模糊请求 |
+| `/llmdoc-ccw:cli` | 使用多 CLI 工具进行分析或实现 |
 
-```bash
-# 全局安装 CLI 工具
-npm install -g cc-workflow
+### Skills（自动触发）
 
-# 使用 CLI 命令
-llmdoc-ccw cli -p "分析认证模块" --tool gemini
-llmdoc-ccw cli -p "实现登录功能" --tool codex --mode write
-```
+| Skill | 触发词 | 描述 |
+|-------|--------|------|
+| investigate | "什么是"、"分析" | 快速代码库调查 |
+| commit | "提交"、"commit" | 生成提交信息 |
+| update-doc | "更新文档"、"同步文档" | 更新 llmdoc |
+| read-doc | "了解项目"、"读文档" | 阅读 llmdoc 概览 |
 
-## 项目目录
+### Agents
+
+| Agent | 用途 |
+|-------|------|
+| worker | 精确执行明确定义的计划 |
+| investigator | 快速、无状态的代码库分析 |
+| recorder | 创建和维护 llmdoc 文档 |
+| scout | 为 initDoc 进行深度调查 |
+
+## 项目结构
 
 ```
 cc-workflow/
-├── .claude-plugin/          # Claude Code Plugin
-│   ├── manifest.json        # Plugin 配置
-│   ├── README.md            # Plugin 说明
-│   ├── CLAUDE.md            # 主配置文件
-│   ├── AGENTS.md            # Agent 使用说明
-│   ├── agents/              # Agent 定义（5个）
-│   ├── commands/            # 命令定义（4个）
-│   ├── skills/              # 技能定义（5个）
-│   └── references/          # 参考文档
-├── src/                     # CLI 工具实现
-│   ├── cli.js               # 命令行接口
-│   └── tools/
-├── bin/                     # CLI 入口
-│   └── llmdoc-ccw.js
-├── package.json             # NPM 包配置
-└── README.md                # 项目说明
+├── .claude-plugin/
+│   └── marketplace.json       # marketplace 清单
+├── llmdoc-ccw/                # 插件目录
+│   ├── .claude-plugin/
+│   │   └── plugin.json        # 插件清单
+│   ├── commands/              # 斜杠命令
+│   ├── skills/                # 自动触发技能
+│   ├── agents/                # Agent 定义
+│   ├── references/            # 参考文档
+│   └── doc/                   # 文档
+├── bin/                       # CLI 入口
+│   ├── setup.js               # npx 安装脚本
+│   └── ccw.js                 # CLI 工具入口
+├── src/                       # CLI 工具实现
+├── package.json
+└── README.md
+```
+
+## CLI 工具（可选）
+
+独立于 Claude Code 使用多模型协作：
+
+```bash
+npm install -g cc-workflow
+
+llmdoc-ccw cli -p "分析认证模块" --tool gemini
+llmdoc-ccw cli -p "实现登录功能" --tool codex --mode write
 ```
 
 ## 开发
 
 ```bash
-# 安装依赖
-npm install
+git clone https://github.com/your-org/cc-workflow.git
+cd cc-workflow
 
-# 本地测试 CLI
-node bin/ccw.js cli -p "test" --tool gemini
+# 本地测试插件
+claude --plugin-dir ./llmdoc-ccw
 
-# 本地测试 Plugin
-# 在 Claude Code 中使用本地路径安装
-/plugin install llmdoc-ccw@file:///path/to/cc-workflow/.claude-plugin
+# 或安装到本地 marketplace
+node bin/setup.js
 ```
 
-## 文档
+## 发布
 
-- [Plugin 使用说明](.claude-plugin/README.md)
-- [Agent 说明](.claude-plugin/AGENTS.md)
-- [CLI 使用规范](references/cli-tools-usage.md)
-- [CLI 执行代理](agents/cli-execution-agent.md)
+```bash
+npm login
+npm publish
+```
 
 ## License
 
@@ -128,4 +141,4 @@ MIT
 
 ---
 
-由 **JRZhang** 精心打造
+由 **JRZhang** 打造
