@@ -14,10 +14,10 @@
 
 ```bash
 # 基本格式
-ccw cli -p "<PROMPT>" --tool <tool> --mode <mode>
+llmdoc-ccw cli -p "<PROMPT>" --tool <tool> --mode <mode>
 
 # 完整示例
-ccw cli -p "PURPOSE: 分析认证模块
+llmdoc-ccw cli -p "PURPOSE: 分析认证模块
 TASK: • 检查安全漏洞 • 审查代码质量
 MODE: analysis
 CONTEXT: @src/auth/**/*
@@ -122,7 +122,7 @@ CONSTRAINTS: [领域约束]
 
 ```bash
 # 继续上次会话
-ccw cli -p "继续..." --tool gemini --resume
+llmdoc-ccw cli -p "继续..." --tool gemini --resume
 
 # 内部调用
 gemini -r latest -o stream-json

@@ -148,15 +148,24 @@ export class TeamOrchestrator {
    */
   async runSinglePhase(phase, request) {
     const executionId = `team-${phase}-${Date.now()}`;
+    const startTime = Date.now();
+
+    let phaseResult;
 
     switch (phase) {
       case 'research':
-        return await this.runResearch(request.prompt);
+        this.emitPhaseStart('research');
+        phaseResult = await this.runResearch(request.prompt);
+        this.emitPhaseComplete('research', phaseResult);
+        break;
 
       case 'plan':
         // Need research results first
         const research = request.research || await this.runResearch(request.prompt);
-        return await this.runPlan(research);
+        this.emitPhaseStart('plan');
+        phaseResult = await this.runPlan(research);
+        this.emitPhaseComplete('plan', phaseResult);
+        break;
 
       case 'exec':
         // Load existing plan or create new one
@@ -164,16 +173,31 @@ export class TeamOrchestrator {
           ? loadPlan(this.workingDir, request.planId)
           : await this.runPlan(await this.runResearch(request.prompt));
         if (!plan) throw new Error('No plan found. Run team-plan first.');
-        return await this.runExec(plan);
+        this.emitPhaseStart('exec');
+        phaseResult = await this.runExec(plan);
+        this.emitPhaseComplete('exec', phaseResult);
+        break;
 
       case 'review':
         const exec = request.execResult || this.context.exec;
         if (!exec) throw new Error('No execution results. Run team-exec first.');
-        return await this.runReview(exec);
+        this.emitPhaseStart('review');
+        phaseResult = await this.runReview(exec);
+        this.emitPhaseComplete('review', phaseResult);
+        break;
 
       default:
         throw new Error(`Unknown phase: ${phase}`);
     }
+
+    return {
+      id: executionId,
+      status: 'success',
+      duration: Date.now() - startTime,
+      phase,
+      request: request.prompt,
+      result: phaseResult
+    };
   }
 
   /**

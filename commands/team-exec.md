@@ -21,7 +21,7 @@ description: "团队执行 - 按计划分层并行执行任务"
 const plan = loadPlan(projectPath, planId || 'latest');
 ```
 
-如果没有计划，提示先运行 `/ccw:team-plan`。
+如果没有计划，提示先运行 `/llmdoc-ccw:team-plan`。
 
 ### STEP 1: 前置检查
 
@@ -60,7 +60,7 @@ const plan = loadPlan(projectPath, planId || 'latest');
 每个任务通过 CLI 执行：
 
 ```bash
-ccw cli -p "<task.prompt>" --tool <task.tool> --mode <task.mode>
+llmdoc-ccw cli -p "<task.prompt>" --tool <task.tool> --mode <task.mode>
 ```
 
 **Builder 任务模板**:
@@ -116,7 +116,7 @@ ccw cli -p "<task.prompt>" --tool <task.tool> --mode <task.mode>
 | task-5  | gemini | ✅     | 20s      | 1             |
 
 下一步:
-  1. 运行 /ccw:team-review 进行代码审查
+  1. 运行 /llmdoc-ccw:team-review 进行代码审查
   2. 或手动检查失败的任务: task-3
 ```
 
@@ -130,5 +130,5 @@ ccw cli -p "<task.prompt>" --tool <task.tool> --mode <task.mode>
 ```
 ✅ 执行阶段完成
 
-下一步: 运行 /ccw:team-review 进行双模型审查
+下一步: 运行 /llmdoc-ccw:team-review 进行双模型审查
 ```

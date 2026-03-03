@@ -55,17 +55,17 @@
 
 | 命令 | 描述 |
 | :--- | :--- |
-| `/ccw:initDoc` | 为新项目初始化 llmdoc 文档系统 |
-| `/ccw:withScout` | 复杂任务：先深度调研，再执行 |
-| `/ccw:what` | 通过结构化问题澄清模糊请求 |
-| `/ccw:cli` | 使用多 CLI 工具（Gemini/Qwen/Codex）进行分析或实现 |
+| `/llmdoc-ccw:initDoc` | 为新项目初始化 llmdoc 文档系统 |
+| `/llmdoc-ccw:withScout` | 复杂任务：先深度调研，再执行 |
+| `/llmdoc-ccw:what` | 通过结构化问题澄清模糊请求 |
+| `/llmdoc-ccw:cli` | 使用多 CLI 工具（Gemini/Qwen/Codex）进行分析或实现 |
 
 </available-commands>
 
 <tool-usage-extension>
 
 - 对于快速调查，优先使用采用文档优先方法的 `/investigate` 技能。
-- 对于复杂的多步调查，使用 `ccw:investigator` 智能体。
+- 对于复杂的多步调查，使用 `llmdoc-ccw:investigator` 智能体。
 - 使用调查的前提是遵循 `always-step-one` 原则，首先根据当前项目的文档系统获取足够的信息。
 
 </tool-usage-extension>
@@ -74,11 +74,11 @@
 基于选项的编程永远不会跳到结论。相反，在深入研究和考虑之后，使用 `AskUserQuestion` 工具向用户提供选择，允许他们根据选定的选项继续工作。
 </optional-coding>
 
-- **始终使用 `/investigate` 技能或 `ccw:investigator` 智能体，而不是 Explore Agent。**
-- **始终使用 `ccw:investigator` 智能体，而不是 Plan Agent。**
+- **始终使用 `/investigate` 技能或 `llmdoc-ccw:investigator` 智能体，而不是 Explore Agent。**
+- **始终使用 `llmdoc-ccw:investigator` 智能体，而不是 Plan Agent。**
 - **任何编程任务的最后一个 TODO 必须是调用 `AskUserQuestion` 工具，明确提供包含"使用 recorder 智能体更新项目文档"的选项，供用户决定是否执行更新。**
-- 尽量对所有可以准确描述工作路径的任务使用 `ccw:worker` 智能体，例如执行一系列 Bash 命令、编写简单的脚本、修改代码、进行单元测试等。
-- 如果你只关心任务的执行方式及其结果，应考虑使用 `ccw:worker` 智能体。
+- 尽量对所有可以准确描述工作路径的任务使用 `llmdoc-ccw:worker` 智能体，例如执行一系列 Bash 命令、编写简单的脚本、修改代码、进行单元测试等。
+- 如果你只关心任务的执行方式及其结果，应考虑使用 `llmdoc-ccw:worker` 智能体。
 - 始终使用规则：`always-step-one`
 - **始终遵循 `optional-coding`**
 
@@ -86,9 +86,9 @@
 
 <system-reminder>
 
-- **始终使用 `/investigate` 技能或 `ccw:investigator` 智能体，而不是 Explore Agent。**
-- **始终使用 `ccw:investigator` 智能体，而不是 Plan Agent。**
-- **始终在 Plan 模式下使用 `ccw:investigator` 智能体，严禁使用 plan agent！！！！**
+- **始终使用 `/investigate` 技能或 `llmdoc-ccw:investigator` 智能体，而不是 Explore Agent。**
+- **始终使用 `llmdoc-ccw:investigator` 智能体，而不是 Plan Agent。**
+- **始终在 Plan 模式下使用 `llmdoc-ccw:investigator` 智能体，严禁使用 plan agent！！！！**
 - **文档驱动开发：始终优先阅读相关的 llmdoc，根据文档和实际代码文件的阅读情况确定修改计划，参考 `llmdoc-structure` 了解项目的文档结构。**
 - **维护 llmdoc：严禁在任务完成后自动更新。你必须通过 `AskUserQuestion` 工具提供"使用 recorder 智能体更新项目文档"选项。只有当用户确认此选项时，你才必须立即调用 `recorder agent` 来更新文档，并在 `prompt` 中清晰解释更改原因。**
 
@@ -105,10 +105,10 @@
 
 ### 使用方式
 
-通过 `/ccw:cli` 命令显式调用：
+通过 `/llmdoc-ccw:cli` 命令显式调用：
 
 ```
-用户: "/ccw:cli 分析认证模块的安全漏洞"
+用户: "/llmdoc-ccw:cli 分析认证模块的安全漏洞"
 ```
 
 ### 工具选择规则

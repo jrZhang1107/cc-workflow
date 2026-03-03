@@ -18,7 +18,7 @@ allowed-tools: Read, Glob, Grep
 ## 操作步骤
 
 1. **步骤 1: 检查文档是否存在**
-   - 如果 `llmdoc/` 目录不存在，告知用户并建议先运行 `/ccw:initDoc`。
+   - 如果 `llmdoc/` 目录不存在，告知用户并建议先运行 `/llmdoc-ccw:initDoc`。
 
 2. **步骤 2: 阅读索引**
    - 阅读 `llmdoc/index.md` 以了解文档结构。

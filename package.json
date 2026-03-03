@@ -5,7 +5,7 @@
   "type": "module",
   "main": "src/index.js",
   "bin": {
-    "ccw2": "./bin/ccw.js"
+    "llmdoc-ccw": "./bin/ccw.js"
   },
   "scripts": {
     "start": "node bin/ccw.js"

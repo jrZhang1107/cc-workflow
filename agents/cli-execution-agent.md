@@ -92,14 +92,14 @@ execute (complex) → codex + mode=write
 
 ```bash
 # Gemini/Qwen (分析)
-ccw cli -p "PURPOSE: ...
+llmdoc-ccw cli -p "PURPOSE: ...
 TASK: ...
 MODE: analysis
 CONTEXT: @src/**/*
 EXPECTED: ..." --tool gemini --mode analysis
 
 # Codex (实现)
-ccw cli -p "PURPOSE: ...
+llmdoc-ccw cli -p "PURPOSE: ...
 TASK: ...
 MODE: write
 CONTEXT: @src/**/*
@@ -118,5 +118,5 @@ EXPECTED: ..." --tool codex --mode write
 **Resume 支持**:
 ```bash
 # 继续上次会话
-ccw cli -p "继续分析..." --tool gemini --resume
+llmdoc-ccw cli -p "继续分析..." --tool gemini --resume
 ```

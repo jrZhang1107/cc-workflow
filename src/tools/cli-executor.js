@@ -57,6 +57,8 @@ export function buildCommand(params) {
 
     case 'codex':
       useStdin = true;
+      // codex 需要使用 exec 子命令来运行非交互式模式
+      args.push('exec');
       if (resume?.enabled) {
         args.push('resume');
         args.push(resume.sessionId ? resume.sessionId : '--last');

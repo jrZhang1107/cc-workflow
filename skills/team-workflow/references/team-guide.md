@@ -45,25 +45,25 @@ Team Workflow 是 cc-workflow 的多 CLI 协作功能，支持：
 
 ```bash
 # 完整工作流
-ccw team -p "实现用户认证模块"
+llmdoc-ccw team -p "实现用户认证模块"
 
 # 单独阶段
-ccw team -p "分析项目" --phase research
-ccw team -p "生成计划" --phase plan
-ccw team --plan latest --phase exec
-ccw team --phase review
+llmdoc-ccw team -p "分析项目" --phase research
+llmdoc-ccw team -p "生成计划" --phase plan
+llmdoc-ccw team --plan latest --phase exec
+llmdoc-ccw team --phase review
 
 # 详细输出
-ccw team -p "任务描述" --verbose
+llmdoc-ccw team -p "任务描述" --verbose
 ```
 
 ### Claude Code 命令
 
 ```
-/ccw:team-research   # 并行分析
-/ccw:team-plan       # 生成计划
-/ccw:team-exec       # 执行计划
-/ccw:team-review     # 审查结果
+/llmdoc-ccw:team-research   # 并行分析
+/llmdoc-ccw:team-plan       # 生成计划
+/llmdoc-ccw:team-exec       # 执行计划
+/llmdoc-ccw:team-review     # 审查结果
 ```
 
 ## 核心概念

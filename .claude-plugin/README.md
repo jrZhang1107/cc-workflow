@@ -13,7 +13,7 @@ Claude Code 插件：多 CLI 协作框架 + llmdoc 文档驱动开发
 /plugin marketplace add https://github.com/your-org/cc-workflow
 
 # 安装插件
-/plugin install ccw@cc-workflow
+/plugin install llmdoc-ccw@cc-workflow
 ```
 
 ### 方式 2: 仅使用 CLI 工具
@@ -25,8 +25,8 @@ Claude Code 插件：多 CLI 协作框架 + llmdoc 文档驱动开发
 npm install -g cc-workflow
 
 # 使用 CLI
-ccw cli -p "分析代码" --tool gemini
-ccw cli -p "实现功能" --tool codex --mode write
+llmdoc-ccw cli -p "分析代码" --tool gemini
+llmdoc-ccw cli -p "实现功能" --tool codex --mode write
 ```
 
 **说明**: 此方式只提供 CLI 工具，不包含 llmdoc 工作流。如需完整功能，请使用 Plugin 方式。
@@ -38,7 +38,7 @@ ccw cli -p "实现功能" --tool codex --mode write
 ### 1. 初始化文档系统
 
 ```bash
-/ccw:initDoc
+/llmdoc-ccw:initDoc
 ```
 
 这会创建 `llmdoc/` 目录结构并生成初始文档。
@@ -56,26 +56,26 @@ ccw cli -p "实现功能" --tool codex --mode write
 
 | 命令 | 描述 |
 |------|------|
-| `/ccw:initDoc` | 初始化 llmdoc 文档系统 |
-| `/ccw:withScout` | 复杂任务：先深度调研，再执行 |
-| `/ccw:what` | 通过结构化问题澄清模糊请求 |
-| `/ccw:cli` | 使用多 CLI 工具进行分析或实现（需要 CLI 工具） |
+| `/llmdoc-ccw:initDoc` | 初始化 llmdoc 文档系统 |
+| `/llmdoc-ccw:withScout` | 复杂任务：先深度调研，再执行 |
+| `/llmdoc-ccw:what` | 通过结构化问题澄清模糊请求 |
+| `/llmdoc-ccw:cli` | 使用多 CLI 工具进行分析或实现（需要 CLI 工具） |
 
 ### 4. 内部 Agents
 
 | Agent | 用途 | 调用方式 |
 |-------|------|----------|
-| `worker` | 精确执行明确定义的计划 | `ccw:worker` |
-| `investigator` | 快速、无状态的代码库分析 | `ccw:investigator` |
-| `recorder` | 创建和维护 llmdoc 文档 | `ccw:recorder` |
-| `scout` | 为 initDoc 进行深度调查 | `ccw:scout` |
+| `worker` | 精确执行明确定义的计划 | `llmdoc-ccw:worker` |
+| `investigator` | 快速、无状态的代码库分析 | `llmdoc-ccw:investigator` |
+| `recorder` | 创建和维护 llmdoc 文档 | `llmdoc-ccw:recorder` |
+| `scout` | 为 initDoc 进行深度调查 | `llmdoc-ccw:scout` |
 
 ## 工作流示例
 
 ### 新项目
 
 ```bash
-/ccw:initDoc
+/llmdoc-ccw:initDoc
 ```
 
 ### 日常开发
@@ -96,10 +96,10 @@ ccw cli -p "实现功能" --tool codex --mode write
 ### 使用 CLI 工具（需要安装 NPM 包）
 
 ```
-"/ccw:cli 分析认证模块的安全漏洞"
+"/llmdoc-ccw:cli 分析认证模块的安全漏洞"
 # -> 使用 Gemini 进行深度安全分析
 
-"/ccw:cli 实现 Redis 缓存层"
+"/llmdoc-ccw:cli 实现 Redis 缓存层"
 # -> 使用 Codex 进行复杂实现
 ```
 

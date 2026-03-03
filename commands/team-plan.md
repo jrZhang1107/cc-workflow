@@ -22,7 +22,7 @@ description: "团队规划 - 基于研究结果生成任务计划，构建依赖
 const research = loadResearch(projectPath, 'latest');
 ```
 
-如果没有研究结果，提示先运行 `/ccw:team-research`。
+如果没有研究结果，提示先运行 `/llmdoc-ccw:team-research`。
 
 ### STEP 1: 任务拆分
 
@@ -117,6 +117,6 @@ Layer 3:
 ```
 ✅ 计划生成完成
 
-下一步: 运行 /ccw:team-exec 开始并行执行
-或: ccw team --plan <plan-id> --phase exec
+下一步: 运行 /llmdoc-ccw:team-exec 开始并行执行
+或: llmdoc-ccw team --plan <plan-id> --phase exec
 ```

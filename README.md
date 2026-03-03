@@ -8,7 +8,7 @@
 
 ### 1. NPM 包（CLI 工具）
 
-提供 `ccw cli` 命令行工具，用于调用 Gemini/Qwen/Codex 等 AI 模型。
+提供 `llmdoc-ccw cli` 命令行工具，用于调用 Gemini/Qwen/Codex 等 AI 模型。
 
 **安装**:
 ```bash
@@ -18,13 +18,13 @@ npm install -g cc-workflow
 **使用**:
 ```bash
 # 分析任务
-ccw cli -p "分析认证模块的安全性" --tool gemini --mode analysis
+llmdoc-ccw cli -p "分析认证模块的安全性" --tool gemini --mode analysis
 
 # 实现任务
-ccw cli -p "实现用户登录功能" --tool codex --mode write
+llmdoc-ccw cli -p "实现用户登录功能" --tool codex --mode write
 
 # 继续上次会话
-ccw cli -p "继续分析" --tool gemini --resume
+llmdoc-ccw cli -p "继续分析" --tool gemini --resume
 ```
 
 ### 2. Claude Code Plugin
@@ -37,7 +37,7 @@ ccw cli -p "继续分析" --tool gemini --resume
 /plugin marketplace add https://github.com/your-org/cc-workflow
 
 # 安装插件
-/plugin install ccw@cc-workflow
+/plugin install llmdoc-ccw@cc-workflow
 ```
 
 详细说明请查看 [.claude-plugin/README.md](.claude-plugin/README.md)
@@ -60,10 +60,10 @@ ccw cli -p "继续分析" --tool gemini --resume
 /plugin marketplace add https://github.com/your-org/cc-workflow
 
 # 安装插件
-/plugin install ccw@cc-workflow
+/plugin install llmdoc-ccw@cc-workflow
 
 # 初始化文档系统
-/ccw:initDoc
+/llmdoc-ccw:initDoc
 ```
 
 ### 方式 2: 仅使用 CLI 工具
@@ -75,8 +75,8 @@ ccw cli -p "继续分析" --tool gemini --resume
 npm install -g cc-workflow
 
 # 使用 CLI 命令
-ccw cli -p "分析认证模块" --tool gemini
-ccw cli -p "实现登录功能" --tool codex --mode write
+llmdoc-ccw cli -p "分析认证模块" --tool gemini
+llmdoc-ccw cli -p "实现登录功能" --tool codex --mode write
 ```
 
 ## 项目目录
@@ -96,7 +96,7 @@ cc-workflow/
 │   ├── cli.js               # 命令行接口
 │   └── tools/
 ├── bin/                     # CLI 入口
-│   └── ccw.js
+│   └── llmdoc-ccw.js
 ├── package.json             # NPM 包配置
 └── README.md                # 项目说明
 ```
@@ -112,7 +112,7 @@ node bin/ccw.js cli -p "test" --tool gemini
 
 # 本地测试 Plugin
 # 在 Claude Code 中使用本地路径安装
-/plugin install ccw@file:///path/to/cc-workflow/.claude-plugin
+/plugin install llmdoc-ccw@file:///path/to/cc-workflow/.claude-plugin
 ```
 
 ## 文档

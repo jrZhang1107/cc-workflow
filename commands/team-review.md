@@ -30,10 +30,10 @@ git diff --name-only HEAD~1  # 或根据执行记录获取
 
 ```bash
 # 后端审查 (Codex)
-ccw cli -p "<后端审查提示词>" --tool codex --mode analysis
+llmdoc-ccw cli -p "<后端审查提示词>" --tool codex --mode analysis
 
 # 前端审查 (Gemini)
-ccw cli -p "<前端审查提示词>" --tool gemini --mode analysis
+llmdoc-ccw cli -p "<前端审查提示词>" --tool gemini --mode analysis
 ```
 
 **后端审查重点**:

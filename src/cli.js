@@ -89,10 +89,10 @@ function printHelp() {
 CC-Workflow - Multi-CLI Collaboration Framework
 
 Usage:
-  ccw cli -p "<prompt>" [options]    Execute CLI tool
-  ccw team -p "<prompt>" [options]   Run Agent Team workflow
-  ccw history                        Show CLI execution history
-  ccw team-history                   Show team execution history
+  llmdoc-ccw cli -p "<prompt>" [options]    Execute CLI tool
+  llmdoc-ccw team -p "<prompt>" [options]   Run Agent Team workflow
+  llmdoc-ccw history                        Show CLI execution history
+  llmdoc-ccw team-history                   Show team execution history
 
 Commands:
   cli           Execute external CLI tool (gemini/qwen/codex)
@@ -118,17 +118,17 @@ General:
 
 Examples:
   # Single CLI execution
-  ccw cli -p "Analyze the authentication module" --tool gemini
-  ccw cli -p "Implement login feature" --tool codex --mode write
+  llmdoc-ccw cli -p "Analyze the authentication module" --tool gemini
+  llmdoc-ccw cli -p "Implement login feature" --tool codex --mode write
 
   # Agent Team workflow
-  ccw team -p "Implement user authentication module"
-  ccw team -p "Analyze project structure" --phase research
-  ccw team --plan latest --phase exec
+  llmdoc-ccw team -p "Implement user authentication module"
+  llmdoc-ccw team -p "Analyze project structure" --phase research
+  llmdoc-ccw team --plan latest --phase exec
 
 Installation:
   For full llmdoc workflow, install as Claude Code Plugin:
-  /plugin install ccw@cc-workflow
+  /plugin install llmdoc-ccw@cc-workflow
 `);
 }
 

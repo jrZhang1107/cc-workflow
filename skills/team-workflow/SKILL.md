@@ -37,11 +37,11 @@ allowed-tools: Bash, Read, Glob, Grep, Task, TaskOutput
 
 | 用户意图 | 推荐阶段 | 命令 |
 |---------|---------|------|
-| "分析"、"了解"、"研究" | research | `/ccw:team-research` |
-| "规划"、"计划"、"拆分" | plan | `/ccw:team-plan` |
-| "执行"、"实现"、"开发" | exec | `/ccw:team-exec` |
-| "审查"、"检查"、"验证" | review | `/ccw:team-review` |
-| 完整任务 | 全流程 | `ccw team -p "<prompt>"` |
+| "分析"、"了解"、"研究" | research | `/llmdoc-ccw:team-research` |
+| "规划"、"计划"、"拆分" | plan | `/llmdoc-ccw:team-plan` |
+| "执行"、"实现"、"开发" | exec | `/llmdoc-ccw:team-exec` |
+| "审查"、"检查"、"验证" | review | `/llmdoc-ccw:team-review` |
+| 完整任务 | 全流程 | `llmdoc-ccw team -p "<prompt>"` |
 
 ### 执行流程
 

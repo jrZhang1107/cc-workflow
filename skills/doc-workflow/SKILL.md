@@ -19,7 +19,7 @@ allowed-tools: Read, Glob, AskUserQuestion
 
 ### 如果 llmdoc 尚未初始化：
 
-建议运行 `/ccw:initDoc` 来初始化文档系统。
+建议运行 `/llmdoc-ccw:initDoc` 来初始化文档系统。
 
 说明其好处：
 - 文档驱动开发
@@ -35,7 +35,7 @@ allowed-tools: Read, Glob, AskUserQuestion
 | 阅读文档 | `/read-doc` | 快速了解项目 |
 | 更新文档 | `/update-doc` | 代码更改后同步文档 |
 | 调查研究 | `/investigate` | 文档优先的代码库研究 |
-| 初始化 | `/ccw:initDoc` | 一次性设置（已完成） |
+| 初始化 | `/llmdoc-ccw:initDoc` | 一次性设置（已完成） |
 
 ### llmdoc 结构
 

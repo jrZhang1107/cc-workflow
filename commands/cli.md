@@ -48,7 +48,7 @@ description: 使用多 CLI 工具（Gemini/Qwen/Codex）进行代码分析或实
    ```bash
    # 通过 Bash 工具后台执行
    Bash({
-     command: "ccw cli -p '...' --tool gemini --mode analysis",
+     command: "llmdoc-ccw cli -p '...' --tool gemini --mode analysis",
      run_in_background: true
    })
    ```
@@ -85,7 +85,7 @@ description: 使用多 CLI 工具（Gemini/Qwen/Codex）进行代码分析或实
 ### 示例 1: 安全分析
 
 ```
-用户: "/ccw:cli 分析认证模块的安全漏洞"
+用户: "/llmdoc-ccw:cli 分析认证模块的安全漏洞"
 
 执行:
 1. 阅读 llmdoc/architecture/authentication.md
@@ -97,14 +97,14 @@ description: 使用多 CLI 工具（Gemini/Qwen/Codex）进行代码分析或实
    CONTEXT: @src/auth/**/* | Memory: 使用 bcrypt + JWT
    EXPECTED: 安全报告（严重级别 + 修复建议）
    CONSTRAINTS: 仅关注认证模块
-4. 调用: ccw cli --tool gemini --mode analysis
+4. 调用: llmdoc-ccw cli --tool gemini --mode analysis
 5. 输出分析结果
 ```
 
 ### 示例 2: 功能实现
 
 ```
-用户: "/ccw:cli 添加 API 限流功能"
+用户: "/llmdoc-ccw:cli 添加 API 限流功能"
 
 执行:
 1. 阅读 llmdoc/architecture/middleware.md
@@ -117,7 +117,7 @@ description: 使用多 CLI 工具（Gemini/Qwen/Codex）进行代码分析或实
    CONTEXT: @src/middleware/**/* | Memory: 现有中间件模式
    EXPECTED: 生产级代码 + 单元测试
    CONSTRAINTS: 遵循现有中间件模式
-5. 调用: ccw cli --tool gemini --mode write
+5. 调用: llmdoc-ccw cli --tool gemini --mode write
 6. 展示实现建议
 ```
 
