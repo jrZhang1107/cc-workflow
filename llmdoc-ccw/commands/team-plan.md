@@ -13,16 +13,32 @@ description: "团队规划 - 基于研究结果生成任务计划，构建依赖
 
 ---
 
+## 上下文传递规则
+
+> **加载研究结果的正确方式**:
+>
+> - **同会话（刚执行完 team-research）**: 研究结果的 stdout 已经在你的上下文中，直接使用即可，不需要任何额外读取操作。
+> - **跨会话（新对话中执行 team-plan）**: 使用轻量命令加载：
+>   ```bash
+>   llmdoc-ccw read-result --phase research
+>   ```
+>   这只输出研究摘要（backend/frontend 的 status 和 summary），不会加载完整 IR。
+>
+> ⛔ **禁止**直接用 Read 工具读取 `~/.cc-workflow/.../reports/*-research.json`，该文件包含所有中间 IR 单元，体积很大。
+
+---
+
 ## 执行流程
 
 ### STEP 0: 加载研究结果
 
-读取最新的研究结果：
-```javascript
-const research = loadResearch(projectPath, 'latest');
-```
-
-如果没有研究结果，提示先运行 `/llmdoc-ccw:team-research`。
+判断当前上下文：
+- 如果上下文中已有 team-research 的 CLI 输出 → 直接使用，跳到 STEP 1
+- 如果是新会话 → 执行：
+  ```bash
+  llmdoc-ccw read-result --phase research
+  ```
+- 如果没有研究结果，提示先运行 `/llmdoc-ccw:team-research`。
 
 ### STEP 1: 任务拆分
 
@@ -91,7 +107,6 @@ Layer 3 (串行): [Task F]                  # 依赖 Layer 2
 
 任务数: 5
 并行层: 3
-预计时间: ~10 分钟
 
 Layer 1 (并行):
   - task-1: 实现用户 API (codex)

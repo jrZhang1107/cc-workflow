@@ -13,15 +13,36 @@ description: "团队执行 - 按计划分层并行执行任务"
 
 ---
 
+## 上下文传递规则
+
+> **加载计划的正确方式**:
+>
+> - **同会话（刚执行完 team-plan）**: 计划内容已经在你的上下文中，直接使用即可。
+> - **跨会话（新对话中执行 team-exec）**: 使用轻量命令加载：
+>   ```bash
+>   llmdoc-ccw read-result --phase plan
+>   ```
+>   这只输出计划的结构信息（tasks 列表、layers、scope），不包含每个 task 的完整 prompt 文本。
+>   如果需要加载特定计划：
+>   ```bash
+>   llmdoc-ccw read-result --phase plan --plan <plan-id>
+>   ```
+>
+> ⛔ **禁止**直接用 Read 工具读取 `~/.cc-workflow/.../plans/latest.json`，该文件包含每个 task 的完整 prompt，体积较大。
+
+---
+
 ## 执行流程
 
 ### STEP 0: 加载计划
 
-```javascript
-const plan = loadPlan(projectPath, planId || 'latest');
-```
-
-如果没有计划，提示先运行 `/llmdoc-ccw:team-plan`。
+判断当前上下文：
+- 如果上下文中已有 team-plan 的输出 → 直接使用，跳到 STEP 1
+- 如果是新会话 → 执行：
+  ```bash
+  llmdoc-ccw read-result --phase plan
+  ```
+- 如果没有计划，提示先运行 `/llmdoc-ccw:team-plan`。
 
 ### STEP 1: 前置检查
 
@@ -51,7 +72,7 @@ const plan = loadPlan(projectPath, planId || 'latest');
 ```
 
 **并行执行规则**:
-- 同层任务并行执行
+- 同层任务并行执行（使用多个并行的 Bash 工具调用）
 - 等待当前层全部完成后进入下一层
 - 任务失败时，跳过依赖它的下游任务
 
@@ -62,6 +83,8 @@ const plan = loadPlan(projectPath, planId || 'latest');
 ```bash
 llmdoc-ccw cli -p "<task.prompt>" --tool <task.tool> --mode <task.mode>
 ```
+
+CLI 的 stdout 会直接返回到你的上下文中，包含该任务的执行结果。
 
 **Builder 任务模板**:
 ```

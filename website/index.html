@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CC-Workflow — 多 CLI 协作框架 for Claude Code</title>
+  <meta name="description" content="CC-Workflow 是一个多 CLI 协作框架 + llmdoc 文档驱动开发插件，为 Claude Code 带来 Gemini、Codex 等多模型并行协作能力。" />
+  <meta name="keywords" content="claude-code, ai, llm, cli, plugin, gemini, codex, documentation, workflow" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <div class="container nav-inner">
+    <span class="nav-logo">CC-Workflow</span>
+    <ul class="nav-links">
+      <li><a href="#features">功能</a></li>
+      <li><a href="#install">安装</a></li>
+      <li><a href="#quickstart">快速开始</a></li>
+      <li><a href="#reference">命令参考</a></li>
+      <li><a href="https://github.com/your-org/cc-workflow" target="_blank">GitHub</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-badge">v1.0.0 &nbsp;·&nbsp; <span>MIT 开源</span> &nbsp;·&nbsp; Claude Code Plugin</div>
+    <h1>多 CLI 协作框架<br/>for Claude Code</h1>
+    <p class="hero-sub">
+      让 Gemini、Codex 等多个 AI 模型在 Claude Code 中并行协作，
+      配合 llmdoc 文档驱动开发，大幅提升复杂任务的执行效率。
+    </p>
+    <div class="hero-actions">
+      <a href="#install" class="btn btn-primary">快速安装</a>
+      <a href="https://github.com/your-org/cc-workflow" target="_blank" class="btn btn-secondary">查看源码</a>
+    </div>
+    <div class="install-cmd">
+      <span class="prompt">$</span>
+      <span>npx cc-workflow</span>
+    </div>
+  </div>
+</section>
+
+<!-- Features -->
+<section id="features">
+  <div class="container">
+    <div class="section-title">
+      <h2>核心功能</h2>
+      <p>专为 Claude Code 设计的多模型协作与文档驱动开发体系</p>
+    </div>
+    <div class="features-grid">
+
+      <div class="feature-card">
+        <div class="feature-icon" style="background:rgba(88,166,255,0.12)">🤝</div>
+        <h3>多 CLI 并行协作</h3>
+        <p>同时调度 Gemini、Codex 等多个 AI 模型，对同一任务进行并行分析或实现，结果自动聚合。</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon" style="background:rgba(63,185,80,0.12)">📚</div>
+        <h3>llmdoc 文档驱动</h3>
+        <p>自动生成并维护针对 LLM 优化的项目文档，让 AI 始终掌握最新的代码库上下文。</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon" style="background:rgba(188,140,255,0.12)">🤖</div>
+        <h3>专业化 Agent 体系</h3>
+        <p>内置 worker、investigator、recorder、scout 等多个专业 Agent，各司其职，精准执行。</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon" style="background:rgba(255,166,87,0.12)">⚡</div>
+        <h3>Team 工作流</h3>
+        <p>通过 team-research → team-plan → team-exec → team-review 四阶段流程，系统化完成复杂任务。</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon" style="background:rgba(255,123,114,0.12)">🔌</div>
+        <h3>Claude Code 深度集成</h3>
+        <p>作为 Claude Code 插件运行，提供斜杠命令和自动触发技能，无缝融入现有工作流。</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon" style="background:rgba(88,166,255,0.12)">📦</div>
+        <h3>零外部依赖</h3>
+        <p>纯 Node.js 实现，无任何第三方依赖，安装轻量，Node >= 18 即可运行。</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Install -->
+<section id="install">
+  <div class="container">
+    <div class="section-title">
+      <h2>安装方式</h2>
+      <p>三种方式，按需选择</p>
+    </div>
+
+    <div class="install-tabs">
+      <button class="tab-btn active" data-tab="tab-npx">npx 安装（推荐）</button>
+      <button class="tab-btn" data-tab="tab-local">本地开发</button>
+      <button class="tab-btn" data-tab="tab-github">GitHub Marketplace</button>
+    </div>
+
+    <div id="tab-npx" class="tab-content active">
+      <div class="install-steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <p>运行安装命令</p>
+            <div class="code-block">
+              <pre><span class="prompt cm"># 一键安装到 Claude Code 插件目录</span>
+<span class="fn">npx</span> cc-workflow</pre>
+              <button class="copy-btn">复制</button>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <p>在 Claude Code 中执行以下命令注册插件</p>
+            <div class="code-block">
+              <pre>/plugin marketplace add C:\Users\<span class="st">&lt;你的用户名&gt;</span>\.claude\plugins\cc-workflow
+/plugin install llmdoc-ccw@cc-workflow-marketplace</pre>
+              <button class="copy-btn">复制</button>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <p>重启 Claude Code 即可使用所有命令和技能。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-local" class="tab-content">
+      <div class="install-steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <p>克隆仓库</p>
+            <div class="code-block">
+              <pre><span class="fn">git</span> clone https://github.com/your-org/cc-workflow.git
+<span class="fn">cd</span> cc-workflow</pre>
+              <button class="copy-btn">复制</button>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <p>以插件目录模式启动 Claude Code</p>
+            <div class="code-block">
+              <pre><span class="fn">claude</span> --plugin-dir ./llmdoc-ccw</pre>
+              <button class="copy-btn">复制</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-github" class="tab-content">
+      <div class="install-steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <p>在 Claude Code 中添加 GitHub marketplace 源</p>
+            <div class="code-block">
+              <pre>/plugin marketplace add your-username/cc-workflow
+/plugin install llmdoc-ccw@cc-workflow-marketplace</pre>
+              <button class="copy-btn">复制</button>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <p>重启 Claude Code 完成安装。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Quick Start -->
+<section id="quickstart">
+  <div class="container">
+    <div class="section-title">
+      <h2>快速开始</h2>
+      <p>安装后，几条命令即可体验完整工作流</p>
+    </div>
+
+    <div class="code-block" style="max-width:720px;margin:0 auto">
+      <pre><span class="cm"># 1. 初始化 llmdoc 文档系统（首次使用）</span>
+/llmdoc-ccw:initDoc
+
+<span class="cm"># 2. 对复杂任务进行多 CLI 并行研究</span>
+/llmdoc-ccw:team-research <span class="st">搭建用户认证模块</span>
+
+<span class="cm"># 3. 生成分层执行计划</span>
+/llmdoc-ccw:team-plan
+
+<span class="cm"># 4. 并行执行所有任务</span>
+/llmdoc-ccw:team-exec
+
+<span class="cm"># 5. 双模型交叉验证结果</span>
+/llmdoc-ccw:team-review
+
+<span class="cm"># 或者：直接使用单 CLI 工具分析</span>
+/llmdoc-ccw:cli <span class="st">分析认证模块的安全风险</span> --tool gemini</pre>
+      <button class="copy-btn">复制</button>
+    </div>
+  </div>
+</section>
+
+<!-- Reference -->
+<section id="reference">
+  <div class="container">
+    <div class="section-title">
+      <h2>命令参考</h2>
+      <p>完整的命令、技能与 Agent 列表</p>
+    </div>
+
+    <!-- Commands -->
+    <div class="ref-group">
+      <h3>Commands（显式调用）</h3>
+      <table class="ref-table">
+        <thead>
+          <tr>
+            <th>命令</th>
+            <th>描述</th>
+            <th>类型</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>/llmdoc-ccw:initDoc</code></td>
+            <td>初始化 llmdoc 文档系统，对项目进行深度调查并生成结构化文档</td>
+            <td><span class="tag tag-cmd">命令</span></td>
+          </tr>
+          <tr>
+            <td><code>/llmdoc-ccw:withScout</code></td>
+            <td>复杂任务专用：先深度调研代码库，再制定并执行计划</td>
+            <td><span class="tag tag-cmd">命令</span></td>
+          </tr>
+          <tr>
+            <td><code>/llmdoc-ccw:what</code></td>
+            <td>通过结构化问题澄清模糊请求，避免方向偏差</td>
+            <td><span class="tag tag-cmd">命令</span></td>
+          </tr>
+          <tr>
+            <td><code>/llmdoc-ccw:cli</code></td>
+            <td>调用 Gemini / Codex / Qwen 等多 CLI 工具进行分析或实现</td>
+            <td><span class="tag tag-cmd">命令</span></td>
+          </tr>
+          <tr>
+            <td><code>/llmdoc-ccw:team-research</code></td>
+            <td>多 CLI 并行分析代码库，生成约束集和依赖关系</td>
+            <td><span class="tag tag-cmd">命令</span></td>
+          </tr>
+          <tr>
+            <td><code>/llmdoc-ccw:team-plan</code></td>
+            <td>基于研究结果生成分层任务计划，构建依赖图</td>
+            <td><span class="tag tag-cmd">命令</span></td>
+          </tr>
+          <tr>
+            <td><code>/llmdoc-ccw:team-exec</code></td>
+            <td>按计划分层并行执行所有任务</td>
+            <td><span class="tag tag-cmd">命令</span></td>
+          </tr>
+          <tr>
+            <td><code>/llmdoc-ccw:team-review</code></td>
+            <td>双模型交叉验证执行结果，确保质量</td>
+            <td><span class="tag tag-cmd">命令</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Skills -->
+    <div class="ref-group">
+      <h3>Skills（自动触发）</h3>
+      <table class="ref-table">
+        <thead>
+          <tr>
+            <th>Skill</th>
+            <th>触发词</th>
+            <th>描述</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>investigate</code></td>
+            <td>"什么是"、"分析"、"explain"</td>
+            <td>快速无状态代码库调查，直接在对话中返回结果</td>
+          </tr>
+          <tr>
+            <td><code>commit</code></td>
+            <td>"提交"、"commit"</td>
+            <td>自动生成规范的 Git 提交信息</td>
+          </tr>
+          <tr>
+            <td><code>update-doc</code></td>
+            <td>"更新文档"、"同步文档"</td>
+            <td>代码变更后自动更新 llmdoc 文档</td>
+          </tr>
+          <tr>
+            <td><code>read-doc</code></td>
+            <td>"了解项目"、"读文档"</td>
+            <td>读取 llmdoc 概览，快速掌握项目上下文</td>
+          </tr>
+          <tr>
+            <td><code>team-workflow</code></td>
+            <td>"team"、"并行执行"、"多CLI"</td>
+            <td>触发完整的 team 工作流协作模式</td>
+          </tr>
+          <tr>
+            <td><code>doc-workflow</code></td>
+            <td>"文档工作流"、"llmdoc"</td>
+            <td>提供文档系统使用指导</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Agents -->
+    <div class="ref-group">
+      <h3>Agents</h3>
+      <table class="ref-table">
+        <thead>
+          <tr>
+            <th>Agent</th>
+            <th>用途</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>worker</code></td>
+            <td>精确执行明确定义的计划，严格遵守文件范围约束</td>
+          </tr>
+          <tr>
+            <td><code>investigator</code></td>
+            <td>快速无状态代码库分析，采用文档优先方法</td>
+          </tr>
+          <tr>
+            <td><code>recorder</code></td>
+            <td>创建并维护 llmdoc 文档，使用 4 类别结构（概览/指南/架构/参考）</td>
+          </tr>
+          <tr>
+            <td><code>scout</code></td>
+            <td>为 initDoc 命令执行深度调查，保存持久化报告</td>
+          </tr>
+          <tr>
+            <td><code>team-lead</code></td>
+            <td>协调多 Agent 协作，管理任务分配和执行流程</td>
+          </tr>
+          <tr>
+            <td><code>team-builder</code></td>
+            <td>执行具体的分析或实现任务，严格遵守文件范围约束</td>
+          </tr>
+          <tr>
+            <td><code>cli-execution-agent</code></td>
+            <td>使用多 CLI 工具（Gemini/Qwen/Codex）进行代码分析或实现</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="footer-links">
+      <a href="https://github.com/your-org/cc-workflow" target="_blank">GitHub</a>
+      <a href="https://github.com/your-org/cc-workflow/issues" target="_blank">Issues</a>
+      <a href="https://www.npmjs.com/package/cc-workflow" target="_blank">npm</a>
+    </div>
+    <p>MIT License &nbsp;·&nbsp; 由 <strong>JRZhang</strong> 打造 &nbsp;·&nbsp; CC-Workflow v1.0.0</p>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

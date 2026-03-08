@@ -13,6 +13,21 @@ description: "团队审查 - 双模型交叉验证执行结果"
 
 ---
 
+## 上下文传递规则
+
+> **加载执行结果的正确方式**:
+>
+> - **同会话（刚执行完 team-exec）**: 执行结果的 stdout 已经在你的上下文中，直接使用即可。
+> - **跨会话（新对话中执行 team-review）**: 使用轻量命令加载：
+>   ```bash
+>   llmdoc-ccw read-result --phase exec
+>   ```
+>   这只输出执行摘要（每个 task 的 status、duration），不包含完整的 CLI 输出。
+>
+> ⛔ **禁止**直接用 Read 工具读取 `~/.cc-workflow/.../reports/<id>.json`，该文件包含所有任务的完整 IR 输出。
+
+---
+
 ## 执行流程
 
 ### STEP 0: 收集变更
@@ -22,11 +37,16 @@ description: "团队审查 - 双模型交叉验证执行结果"
 git diff --name-only HEAD~1  # 或根据执行记录获取
 ```
 
-读取执行结果和计划文件，了解预期行为。
+如果是跨会话，先加载执行摘要：
+```bash
+llmdoc-ccw read-result --phase exec
+```
+
+了解哪些任务成功、哪些失败，以及涉及的文件范围。
 
 ### STEP 1: 并行审查
 
-**同时启动两个审查任务**:
+**同时启动两个审查任务**（使用两个并行的 Bash 工具调用）:
 
 ```bash
 # 后端审查 (Codex)
@@ -35,6 +55,8 @@ llmdoc-ccw cli -p "<后端审查提示词>" --tool codex --mode analysis
 # 前端审查 (Gemini)
 llmdoc-ccw cli -p "<前端审查提示词>" --tool gemini --mode analysis
 ```
+
+两个命令的 stdout 输出会直接返回到你的上下文中。
 
 **后端审查重点**:
 - 逻辑正确性
@@ -50,7 +72,7 @@ llmdoc-ccw cli -p "<前端审查提示词>" --tool gemini --mode analysis
 
 ### STEP 2: 问题分级
 
-合并两个审查结果，按严重性分级：
+直接基于 STEP 1 中两个 CLI 的 stdout 输出进行聚合，按严重性分级：
 
 ```markdown
 ## 审查报告

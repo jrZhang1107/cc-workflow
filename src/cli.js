@@ -6,7 +6,14 @@
 import { existsSync } from 'fs';
 import { executeCli } from './tools/cli-executor.js';
 import { loadHistory } from './tools/cli-state.js';
-import { TeamOrchestrator, loadTeamExecutions, loadPlan } from './team/index.js';
+import {
+  TeamOrchestrator,
+  loadTeamExecutions,
+  loadPlan,
+  loadResearch,
+  loadExecution as teamLoadExecution,
+  getLatestExecution as teamGetLatestExecution
+} from './team/index.js';
 
 /**
  * Parse command line arguments
@@ -41,6 +48,9 @@ function parseArgs(args) {
         break;
       case 'team-history':
         result.command = 'team-history';
+        break;
+      case 'read-result':
+        result.command = 'read-result';
         break;
       case '-p':
       case '--prompt':
@@ -91,12 +101,14 @@ CC-Workflow - Multi-CLI Collaboration Framework
 Usage:
   llmdoc-ccw cli -p "<prompt>" [options]    Execute CLI tool
   llmdoc-ccw team -p "<prompt>" [options]   Run Agent Team workflow
+  llmdoc-ccw read-result --phase <phase>    Read phase result (lightweight)
   llmdoc-ccw history                        Show CLI execution history
   llmdoc-ccw team-history                   Show team execution history
 
 Commands:
   cli           Execute external CLI tool (gemini/qwen/codex)
   team          Run Agent Team workflow (research → plan → exec → review)
+  read-result   Read saved phase result (only key fields, no full IR)
   history       Show CLI execution history
   team-history  Show team execution history
 
@@ -284,6 +296,121 @@ function showTeamHistory() {
 }
 
 /**
+ * Read result - extract specific fields from saved execution results
+ * Supports: research, plan, exec, review
+ *
+ * Usage:
+ *   llmdoc-ccw read-result --phase research [--plan <id>]
+ *   llmdoc-ccw read-result --phase plan [--plan <id>]
+ *   llmdoc-ccw read-result --phase exec [--plan <id>]
+ *   llmdoc-ccw read-result --phase review [--plan <id>]
+ */
+function readResult(options) {
+  const { phase, planId } = options;
+  const projectPath = process.cwd();
+
+  if (!phase) {
+    console.error('Error: --phase is required (research, plan, exec, review)');
+    process.exit(1);
+  }
+
+  try {
+    switch (phase) {
+      case 'research': {
+        // Find latest execution that has research data
+        const execution = teamGetLatestExecution(projectPath);
+        if (!execution?.phases?.research) {
+          console.error('No research results found. Run /llmdoc-ccw:team-research first.');
+          process.exit(1);
+        }
+        const r = execution.phases.research;
+        // Output only the summary fields, not the full IR
+        const slim = {
+          backend: { status: r.backend?.status, summary: r.backend?.summary },
+          frontend: { status: r.frontend?.status, summary: r.frontend?.summary },
+          timestamp: r.timestamp
+        };
+        console.log(JSON.stringify(slim, null, 2));
+        break;
+      }
+
+      case 'plan': {
+        const plan = loadPlan(projectPath, planId || 'latest');
+        if (!plan) {
+          console.error('No plan found. Run /llmdoc-ccw:team-plan first.');
+          process.exit(1);
+        }
+        // Output plan without embedding full prompt text in each task
+        const slim = {
+          id: plan.id,
+          request: plan.request,
+          summary: plan.summary,
+          layers: plan.layers,
+          tasks: (plan.tasks || []).map(t => ({
+            id: t.id,
+            name: t.name,
+            tool: t.tool,
+            mode: t.mode,
+            scope: t.scope,
+            dependencies: t.dependencies,
+            acceptance: t.acceptance,
+            status: t.status
+          })),
+          createdAt: plan.createdAt
+        };
+        console.log(JSON.stringify(slim, null, 2));
+        break;
+      }
+
+      case 'exec': {
+        const execution = teamGetLatestExecution(projectPath);
+        if (!execution?.phases?.exec) {
+          console.error('No exec results found. Run /llmdoc-ccw:team-exec first.');
+          process.exit(1);
+        }
+        const e = execution.phases.exec;
+        const slim = {
+          summary: e.summary,
+          results: (e.results || []).map(r => ({
+            taskId: r.taskId,
+            status: r.status,
+            duration: r.duration,
+            error: r.error || null
+          }))
+        };
+        console.log(JSON.stringify(slim, null, 2));
+        break;
+      }
+
+      case 'review': {
+        const execution = teamGetLatestExecution(projectPath);
+        if (!execution?.phases?.review) {
+          console.error('No review results found. Run /llmdoc-ccw:team-review first.');
+          process.exit(1);
+        }
+        const rv = execution.phases.review;
+        const slim = {
+          passed: rv.passed,
+          issues: rv.issues,
+          backend: { status: rv.backend?.status, feedback: rv.backend?.feedback },
+          frontend: { status: rv.frontend?.status, feedback: rv.frontend?.feedback },
+          timestamp: rv.timestamp
+        };
+        console.log(JSON.stringify(slim, null, 2));
+        break;
+      }
+
+      default:
+        console.error(`Unknown phase: ${phase}. Use: research, plan, exec, review`);
+        process.exit(1);
+    }
+  } catch (err) {
+    console.error(`Error reading result: ${err.message}`);
+    process.exit(1);
+  }
+}
+
+/**
  * Main entry point
  */
 export async function run(args) {
@@ -306,6 +433,9 @@ export async function run(args) {
       break;
     case 'team-history':
       showTeamHistory();
+      break;
+    case 'read-result':
+      readResult(options);
       break;
     default:
       printHelp();
